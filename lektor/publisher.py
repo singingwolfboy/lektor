@@ -628,6 +628,13 @@ class GithubPagesPublisher(Publisher):
                 yield line
             ssh_command = self.update_git_config(path, target_url, branch,
                                                  credentials)
+
+            # DEBUGGING
+            yield "[debug] .git/config"
+            cat_cmd = Command(['cat', '.git/config'], cwd=path)
+            for line in cat_cmd.proc():
+                yield line
+
             for line in git(['remote', 'update']):
                 yield line
 
